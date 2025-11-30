@@ -1,3 +1,7 @@
+// Module 5 Part A Lab Activity
+// Student: Ogar Samuel
+// Functions: inputDrinkBase() and inputDrinkTemp()
+
 #include <iostream>
 #include <limits>
 #include <random>
@@ -22,6 +26,10 @@ void resetStream();
 
 sizeType inputDrinkSize();
 void addFlavorToDrink(drink &thedrink);
+
+// Lab function prototypes
+baseType inputDrinkBase();
+tempType inputDrinkTemp();
 
 int main()
 {
@@ -171,4 +179,80 @@ void addFlavorToDrink(drink &thedrink)
         }
         thedrink.addFlavor(drink::strToFlav[flavStr]);
     }
+}
+
+// =============================================================================
+// LAB FUNCTIONS - Ogar Samuel
+// =============================================================================
+
+// Function: inputDrinkBase()
+// Purpose: Get and validate drink base input from user
+baseType inputDrinkBase()
+{
+    std::string baseStr;
+    std::cout << "Please enter the drink base: ";
+    std::cin >> baseStr;
+    
+    // Transform to uppercase for case-insensitive comparison
+    transform(baseStr.begin(), baseStr.end(), baseStr.begin(), ::toupper);
+    
+    // Loop while input is not valid
+    while (!drink::strToBase.count(baseStr))
+    {
+        std::cout << "That is not a valid base." << std::endl;
+        std::cout << "Valid bases are: ";
+        
+        // Use iterator to display all valid options
+        auto it = drink::baseToStr.begin();
+        std::cout << it->second;
+        
+        for (++it; it != drink::baseToStr.end(); ++it)
+        {
+            std::cout << ", " << it->second;
+        }
+        std::cout << std::endl;
+        
+        std::cout << "Please enter the drink base: ";
+        std::cin >> baseStr;
+        transform(baseStr.begin(), baseStr.end(), baseStr.begin(), ::toupper);
+    }
+    
+    // Return the enum value from the map
+    return drink::strToBase[baseStr];
+}
+
+// Function: inputDrinkTemp()
+// Purpose: Get and validate drink temperature input from user
+tempType inputDrinkTemp()
+{
+    std::string tempStr;
+    std::cout << "Please enter the drink temperature: ";
+    std::cin >> tempStr;
+    
+    // Transform to uppercase for case-insensitive comparison
+    transform(tempStr.begin(), tempStr.end(), tempStr.begin(), ::toupper);
+    
+    // Loop while input is not valid
+    while (!drink::strToTemp.count(tempStr))
+    {
+        std::cout << "That is not a valid temperature." << std::endl;
+        std::cout << "Valid temperatures are: ";
+        
+        // Use iterator to display all valid options
+        auto it = drink::tempToStr.begin();
+        std::cout << it->second;
+        
+        for (++it; it != drink::tempToStr.end(); ++it)
+        {
+            std::cout << ", " << it->second;
+        }
+        std::cout << std::endl;
+        
+        std::cout << "Please enter the drink temperature: ";
+        std::cin >> tempStr;
+        transform(tempStr.begin(), tempStr.end(), tempStr.begin(), ::toupper);
+    }
+    
+    // Return the enum value from the map
+    return drink::strToTemp[tempStr];
 }
